@@ -1,0 +1,58 @@
+.title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.card--task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
+
+.card--task-title {
+  font-size: 1.2rem;
+}
+
+.card--task-status {
+  font-size: 0.7rem;
+}
+
+.card--task-description {
+  font-size: 1rem;
+}
+
+.card--task-action {
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.card--task-action button {
+  padding: 8px 16px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.card--task-action button:hover {
+  background-color: #333;
+  color: #fff;
+}
