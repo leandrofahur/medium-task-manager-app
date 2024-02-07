@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./TaskManager.css";
 
+const idGenerator = () => Math.floor(Math.random() * 1000) + 1;
+
 // Data Structure:
 // const TODO = [
 //   {
@@ -13,57 +15,82 @@ import "./TaskManager.css";
 
 const TODO = [
   {
-    id: 1,
+    id: idGenerator(),
     title: "Task 1",
     description: "Description 1",
     status: "DONE",
     isEditing: false,
+    isNew: false,
   },
   {
-    id: 2,
+    id: idGenerator(),
     title: "Task 2",
     description: "Description 2",
     status: "IN_PROGRESS",
     isEditing: false,
+    isNew: false,
   },
   {
-    id: 3,
+    id: idGenerator(),
     title: "Task 3",
     description: "Description 3",
     status: "DONE",
     isEditing: false,
+    isNew: false,
   },
 ];
 
 export default function TaskManager() {
   const [tasks, setTasks] = useState(TODO);
-  const [editingTask, setEditingTask] = useState(null);
+  const [editingTask, setEditingTask] = useState({
+    isEditing: false,
+    isNew: false,
+  });
 
   function handleOnAdd() {
-    setTasks((prevStatus) => [
-      ...prevStatus,
-      {
-        id: prevStatus.length + 1,
-        title: `Task ${prevStatus.length + 1}`,
-        description: `Description ${prevStatus.length + 1}`,
-        status: "IN_PROGRESS",
-      },
-    ]);
+    setEditingTask({
+      id: null,
+      title: "",
+      description: "",
+      status: "IN_PROGRESS",
+      isEditing: true,
+      isNew: true,
+    });
   }
 
   function handleOnEdit(task) {
-    setEditingTask({ ...task });
+    setEditingTask((prevStatus) => ({
+      ...prevStatus,
+      ...task,
+      isEditing: true,
+      isNew: false,
+    }));
   }
 
   function handleSaveEdition() {
-    if (!editingTask) return; // Guard clause in case there's no editing task
+    if (!editingTask.isEditing) return;
 
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === editingTask.id ? { ...editingTask, isEditing: false } : task
-      )
-    );
-    setEditingTask(null);
+    setTasks((prevTasks) => {
+      if (editingTask.isNew) {
+        return [
+          ...prevTasks,
+          {
+            ...editingTask,
+            id: prevTasks.length + 1,
+            isEditing: false,
+            isNew: false,
+          },
+        ];
+      } else {
+        return prevTasks.map((task) =>
+          task.id === editingTask.id
+            ? { ...editingTask, isEditing: false }
+            : task
+        );
+      }
+    });
+
+    setEditingTask({ isEditing: false, isNew: false });
   }
 
   function handleOnRemove(id) {
@@ -75,17 +102,19 @@ export default function TaskManager() {
   }
 
   function renderEditDialog() {
-    if (!editingTask) return null; // Don't render if there's no task being edited
+    if (!editingTask.isEditing) return null;
 
     const handleFieldChange = (e) => {
       const { name, value } = e.target;
       setEditingTask((prevTask) => ({ ...prevTask, [name]: value }));
     };
 
+    const dialogTitle = editingTask.isNew ? "Add New Task" : "Edit Task";
+
     return (
       <dialog className="dialog--container" open>
         <div className="dialog--content">
-          <h2>Edit Task</h2>
+          <h2>{dialogTitle}</h2>
           <form onSubmit={(e) => e.preventDefault()}>
             <div className="form--field">
               <label htmlFor="title">Title</label>
@@ -122,7 +151,12 @@ export default function TaskManager() {
               <button type="button" onClick={handleSaveEdition}>
                 Save
               </button>
-              <button type="button" onClick={() => setEditingTask(null)}>
+              <button
+                type="button"
+                onClick={() =>
+                  setEditingTask({ isEditing: false, isNew: false })
+                }
+              >
                 Cancel
               </button>
             </div>

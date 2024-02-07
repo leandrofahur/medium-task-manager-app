@@ -53,18 +53,6 @@
   gap: 8px;
 }
 
-.card--task-action button {
-  padding: 8px 16px;
-  border: 1px solid #333;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.card--task-action button:hover {
-  background-color: #333;
-  color: #fff;
-}
-
 .dialog--container {
   position: fixed;
   top: 0;
