@@ -31,7 +31,15 @@
 }
 
 .card--task-status {
-  font-size: 0.7rem;
+  border: 1px solid #333;
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+}
+
+.active {
+  background-color: green;
 }
 
 .card--task-description {
@@ -55,4 +63,41 @@
 .card--task-action button:hover {
   background-color: #333;
   color: #fff;
+}
+
+.dialog--container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 100;
+}
+
+.dialog--content {
+  width: 300px;
+
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.form--field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form--action {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
 }

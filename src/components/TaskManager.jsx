@@ -16,24 +16,28 @@ const TODO = [
     id: 1,
     title: "Task 1",
     description: "Description 1",
-    status: "IN_PROGRESS",
+    status: "DONE",
+    isEditing: false,
   },
   {
     id: 2,
     title: "Task 2",
     description: "Description 2",
     status: "IN_PROGRESS",
+    isEditing: false,
   },
   {
     id: 3,
     title: "Task 3",
     description: "Description 3",
     status: "DONE",
+    isEditing: false,
   },
 ];
 
 export default function TaskManager() {
   const [tasks, setTasks] = useState(TODO);
+  const [editingTask, setEditingTask] = useState(null);
 
   function handleOnAdd() {
     setTasks((prevStatus) => [
@@ -47,8 +51,19 @@ export default function TaskManager() {
     ]);
   }
 
-  function handleOnEdit() {
-    console.log("Edit task");
+  function handleOnEdit(task) {
+    setEditingTask({ ...task });
+  }
+
+  function handleSaveEdition() {
+    if (!editingTask) return; // Guard clause in case there's no editing task
+
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === editingTask.id ? { ...editingTask, isEditing: false } : task
+      )
+    );
+    setEditingTask(null);
   }
 
   function handleOnRemove(id) {
@@ -57,6 +72,64 @@ export default function TaskManager() {
 
   function handleOnRemoveAll() {
     setTasks([]);
+  }
+
+  function renderEditDialog() {
+    if (!editingTask) return null; // Don't render if there's no task being edited
+
+    const handleFieldChange = (e) => {
+      const { name, value } = e.target;
+      setEditingTask((prevTask) => ({ ...prevTask, [name]: value }));
+    };
+
+    return (
+      <dialog className="dialog--container" open>
+        <div className="dialog--content">
+          <h2>Edit Task</h2>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div className="form--field">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={editingTask.title}
+                onChange={handleFieldChange}
+              />
+            </div>
+            <div className="form--field">
+              <label htmlFor="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                value={editingTask.description}
+                onChange={handleFieldChange}
+              />
+            </div>
+            <div className="form--field">
+              <label htmlFor="status">Status</label>
+              <select
+                id="status"
+                name="status"
+                value={editingTask.status}
+                onChange={handleFieldChange}
+              >
+                <option value="DONE">Done</option>
+                <option value="IN_PROGRESS">In Progress</option>
+              </select>
+            </div>
+            <div className="form--action">
+              <button type="button" onClick={handleSaveEdition}>
+                Save
+              </button>
+              <button type="button" onClick={() => setEditingTask(null)}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </dialog>
+    );
   }
 
   return (
@@ -82,12 +155,16 @@ export default function TaskManager() {
                 <li className="card" key={task.id}>
                   <div className="card--task-header">
                     <h2 className="card--task-title">{task.title}</h2>
-                    <p className="card--task-status">{task.status}</p>
+                    <span
+                      className={`card--task-status ${
+                        task.status === "IN_PROGRESS" && "active"
+                      }`}
+                    />
                   </div>
 
                   <p className="card--task-description">{task.description}</p>
                   <div className="card--task-action">
-                    <button type="button" onClick={handleOnEdit}>
+                    <button type="button" onClick={() => handleOnEdit(task)}>
                       Edit
                     </button>
                     <button
@@ -104,6 +181,7 @@ export default function TaskManager() {
             <p>No tasks available</p>
           )}
         </section>
+        {renderEditDialog()}
       </main>
     </>
   );
