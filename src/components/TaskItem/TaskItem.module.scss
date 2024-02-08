@@ -1,0 +1,42 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 20px;
+  border-radius: 4px;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .status {
+    border: 1px solid #333;
+    border-radius: 100%;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+  }
+
+  .active {
+    background-color: green;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .action {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+    gap: 8px;
+  }
+}
