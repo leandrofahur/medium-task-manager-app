@@ -10,12 +10,13 @@ export default function TaskList(props) {
     <section>
       <ul>
         {tasks.map((task) => (
-          <TaskItem
-            key={task.id}
-            task={task}
-            handleOnEdit={handleOnEdit}
-            handleOnRemove={handleOnRemove}
-          />
+          <div key={task.id}>
+            <TaskItem
+              task={task}
+              handleOnEdit={handleOnEdit}
+              handleOnRemove={handleOnRemove}
+            />
+          </div>
         ))}
       </ul>
     </section>
