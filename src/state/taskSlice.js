@@ -22,6 +22,12 @@ export const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {
+    setTask: (state, action) => {
+      state.tasks = action.payload;
+    },
+    setEditingTask: (state, action) => {
+      state.editingTask = action.payload;
+    },
     addTask: (state, action) => {
       state.tasks.push(action.payload);
     },
@@ -39,14 +45,21 @@ export const taskSlice = createSlice({
     removeAllTasks: (state) => {
       state.tasks = [];
     },
-    setEditingTask: (state, action) => {
-      state.editingTask = action.payload;
-    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { addTask, editTask, removeTask, removeAllTasks, setEditingTask } =
-  taskSlice.actions;
+// actions:
+export const {
+  addTask,
+  editTask,
+  removeTask,
+  removeAllTasks,
+  setTask,
+  setEditingTask,
+} = taskSlice.actions;
+
+// selectors:
+export const selectTasks = (state) => state.task.tasks;
+export const selectEditingTask = (state) => state.task.editingTask;
 
 export default taskSlice.reducer;

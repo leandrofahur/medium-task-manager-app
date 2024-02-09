@@ -1,15 +1,34 @@
 import PropTypes from "prop-types";
+
+// state:
+import { addTask, setEditingTask } from "../../state/taskSlice";
+
+// third-party libraries:
+import { useDispatch } from "react-redux";
+
 import styles from "./TaskDialog.module.scss";
 
 export default function TaskDialog(props) {
-  const { editingTask, setEditingTask, handleSaveEdition } = props;
+  const { editingTask } = props;
 
-  if (!editingTask.isEditing) return null;
+  // redux state management:
+  const dispatch = useDispatch();
 
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
-    setEditingTask((prevTask) => ({ ...prevTask, [name]: value }));
+    dispatch(setEditingTask({ ...editingTask, [name]: value }));
   };
+
+  const handleSaveEdition = () => {
+    if (editingTask.isNew) {
+      dispatch(addTask({ ...editingTask, id: Date.now() }));
+    } else {
+      dispatch(setEditingTask(editingTask));
+    }
+    dispatch(setEditingTask({ isEditing: false, isNew: false }));
+  };
+
+  if (!editingTask.isEditing) return null;
 
   const dialogTitle = editingTask.isNew ? "Add New Task" : "Edit Task";
 
@@ -75,6 +94,4 @@ TaskDialog.propTypes = {
     isEditing: PropTypes.bool,
     isNew: PropTypes.bool,
   }),
-  setEditingTask: PropTypes.func,
-  handleSaveEdition: PropTypes.func,
 };
