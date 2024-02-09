@@ -1,26 +1,14 @@
 import PropTypes from "prop-types";
 
-// third-party libraries:
-import { useDispatch } from "react-redux";
-
-// state:
-import { removeTask, setEditingTask } from "../../state/taskSlice";
+// hooks:
+import useTasksHook from "../../hooks/useTasksHook";
 
 import styles from "./TaskItem.module.scss";
 
 export default function TaskItem(props) {
   const { task } = props;
 
-  // redux state management:
-  const dispatch = useDispatch();
-
-  function handleOnEdit(task) {
-    dispatch(setEditingTask({ ...task, isEditing: true }));
-  }
-
-  function handleOnRemove(id) {
-    dispatch(removeTask(id));
-  }
+  const { handleOnEdit, handleOnRemove } = useTasksHook();
 
   return (
     <li className={styles.card} key={task.id}>

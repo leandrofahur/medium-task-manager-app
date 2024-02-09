@@ -1,10 +1,11 @@
-import PropTypes from "prop-types";
+// hooks:
+import useTasksHook from "../../hooks/useTasksHook";
 
 // custom components:
 import TaskItem from "../TaskItem/TaskItem";
 
-export default function TaskList(props) {
-  const { tasks } = props;
+export default function TaskList() {
+  const { tasks } = useTasksHook();
 
   return (
     <section>
@@ -18,14 +19,3 @@ export default function TaskList(props) {
     </section>
   );
 }
-
-TaskList.propTypes = {
-  tasks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      description: PropTypes.string,
-      status: PropTypes.string,
-    })
-  ),
-};
