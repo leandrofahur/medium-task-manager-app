@@ -12,7 +12,6 @@ import { createSlice } from "@reduxjs/toolkit";
 //   },
 // ]
 
-// Initial state
 const initialState = {
   tasks: [],
   editingTask: { isEditing: false, isNew: false },
