@@ -15,6 +15,9 @@ import {
 // utils:
 import { idGenerator } from "../utils/taskUtils";
 
+// constants:
+import { TASK_STATUS } from "../constants/taskConstants";
+
 export default function useTasksHook() {
   // redux state management:
   const dispatch = useDispatch();
@@ -27,7 +30,7 @@ export default function useTasksHook() {
         id: idGenerator(),
         title: "",
         description: "",
-        status: "IN_PROGRESS",
+        status: TASK_STATUS.IN_PROGRESS,
         isEditing: true,
         isNew: true,
       })

@@ -1,6 +1,9 @@
 // hooks:
 import useTasksHook from "../../hooks/useTasksHook";
 
+// constants:
+import { TASK_STATUS } from "../../constants/taskConstants";
+
 import styles from "./TaskDialog.module.scss";
 
 export default function TaskDialog() {
@@ -43,8 +46,10 @@ export default function TaskDialog() {
               value={editingTask.status}
               onChange={handleFieldChange}
             >
-              <option value="DONE">Done</option>
-              <option value="IN_PROGRESS">In Progress</option>
+              <option value={TASK_STATUS.DONE}>{TASK_STATUS.DONE}</option>
+              <option value={TASK_STATUS.IN_PROGRESS}>
+                {TASK_STATUS.IN_PROGRESS}
+              </option>
             </select>
           </div>
           <div className={styles.action}>

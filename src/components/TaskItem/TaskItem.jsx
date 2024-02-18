@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 // hooks:
 import useTasksHook from "../../hooks/useTasksHook";
 
+// constants:
+import { TASK_STATUS } from "../../constants/taskConstants";
+
 import styles from "./TaskItem.module.scss";
 
 export default function TaskItem(props) {
@@ -16,7 +19,7 @@ export default function TaskItem(props) {
         <h2 className={styles.title}>{task.title}</h2>
         <span
           className={`${styles.status} ${
-            task.status === "IN_PROGRESS" && styles.active
+            task.status !== TASK_STATUS.IN_PROGRESS && styles.active
           }`}
         />
       </div>
