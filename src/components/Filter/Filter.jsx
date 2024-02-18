@@ -1,21 +1,10 @@
-// hooks:
-import useFiltersHook from "../../hooks/useFiltersHook";
+import PropTypes from "prop-types";
 
-// constants:
-import { TASK_STATUS } from "../../constants/taskConstants";
-
-export default function Filter() {
-  const { status, handleSetFilter } = useFiltersHook();
-
-  // options for the select element:
-  const options = [
-    { value: TASK_STATUS.ALL, label: TASK_STATUS.ALL },
-    { value: TASK_STATUS.IN_PROGRESS, label: TASK_STATUS.IN_PROGRESS },
-    { value: TASK_STATUS.DONE, label: TASK_STATUS.DONE },
-  ];
+export default function Filter(props) {
+  const { options, value, onChange } = props;
 
   return (
-    <select value={status} onChange={(e) => handleSetFilter(e.target.value)}>
+    <select value={value} onChange={(e) => onChange(e.target.value)}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
@@ -24,3 +13,14 @@ export default function Filter() {
     </select>
   );
 }
+
+Filter.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

@@ -2,19 +2,16 @@
 import { useSelector, useDispatch } from "react-redux";
 
 // state:
-import { setFilter, selectStatus } from "../state/filterSlice";
-
-// constants:
-// import { TASK_STATUS } from "../constants/taskConstants";
+import { setFilter, selectValue } from "../state/filterSlice";
 
 export default function useFiltersHook() {
   // redux state management:
   const dispatch = useDispatch();
-  const status = useSelector(selectStatus);
+  const value = useSelector(selectValue);
 
-  function handleSetFilter(status) {
-    dispatch(setFilter(status));
+  function handleSetFilter(newValue) {
+    dispatch(setFilter(newValue));
   }
 
-  return { status, handleSetFilter };
+  return { value, handleSetFilter };
 }
