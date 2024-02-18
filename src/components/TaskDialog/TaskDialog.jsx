@@ -10,7 +10,6 @@ export default function TaskDialog() {
   const { editingTask, handleFieldChange, handleOnCancel, handleSaveEdition } =
     useTasksHook();
 
-  // console.log(editingTask);
   if (!editingTask.isEditing) return null;
   const dialogTitle = editingTask.isNew ? "Add New Task" : "Edit Task";
 
