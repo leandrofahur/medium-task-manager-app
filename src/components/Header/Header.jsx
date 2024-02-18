@@ -1,4 +1,8 @@
 import PropTypes from "prop-types";
+
+// custom components:
+import Filter from "../Filter/Filter";
+
 import styles from "./Header.module.scss";
 
 export default function Header(props) {
@@ -14,6 +18,10 @@ export default function Header(props) {
         <button type="button" onClick={handleOnRemoveAll}>
           Remove All
         </button>
+      </div>
+      <h3 className={styles.subtitle}>Filter Tasks</h3>
+      <div className={styles.action}>
+        <Filter />
       </div>
     </header>
   );
